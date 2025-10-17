@@ -20,8 +20,8 @@ class Parks {
   factory Parks.fromJson(Map<String, dynamic> json) {
     return Parks(
       id: json['id'] as int?,
-      name: json['name'] as String,
-      country: json['country'] as String?, // Safely parse optional fields
+      name: json['name'] as String? ?? "Parks unknown",
+      country: json['country'] as String?,
       continent: json['continent'] as String?,
       latitude: json['latitude'] as String?,
       longitude: json['longitude'] as String?,
@@ -31,6 +31,8 @@ class Parks {
 
   // Method to convert a List<dynamic> to List<Parks>
   static List<Parks> fromJsonList(List<dynamic> jsonList) {
-    return jsonList.map((json) => Parks.fromJson(json as Map<String, dynamic>)).toList();
+    return jsonList
+        .map((json) => Parks.fromJson(json as Map<String, dynamic>))
+        .toList();
   }
 }

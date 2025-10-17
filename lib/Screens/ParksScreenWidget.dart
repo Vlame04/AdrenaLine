@@ -1,6 +1,7 @@
 import 'package:adrenaline/API/request.dart';
 import 'package:adrenaline/Data/ParkOrganisation.dart';
 import 'package:flutter/material.dart';
+import 'ParkScreenWidget.dart';
 
 class ParksScreenWidget extends StatefulWidget {
   const ParksScreenWidget({super.key});
@@ -21,7 +22,7 @@ class _ParksScreenWidgetState extends State<ParksScreenWidget> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Parks")),
+      appBar: AppBar(title: const Text("Adrenaline"), centerTitle: true,),
       body: FutureBuilder<List<ParkOrganisation>>(
         future: _data,
         builder: (context, snapshot) {
@@ -40,8 +41,16 @@ class _ParksScreenWidgetState extends State<ParksScreenWidget> {
             children: orgs.map((org) => ExpansionTile(
               title: Text(org.name),
               initiallyExpanded: true,
-              children: org.parks.map((park) => ListTile(
-                title: Text(park.name),
+              children: org.parks.map((park) => ElevatedButton(
+                child: Text(park.name),
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => ParkScreenWidget(
+                          id: park.id,
+                          name: park.name))
+                  );
+                },
               )).toList(),
             )).toList()
           );
